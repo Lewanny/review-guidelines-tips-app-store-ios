@@ -1,6 +1,32 @@
 # ios-app-store-review-guidelines-tips
 
 **************  
+#### 2016-08-16
+AppStore被驳回问题：   
+
+问题描述：   
+发件人 Apple
+Design Preamble
+
+Your app includes an update button or alerts the user to update the app. To avoid user confusion, app version updates must utilize the iOS built-in update mechanism. 
+
+Specifically, your app has a tappable version number section.
+
+We've attached screenshot(s) for your reference.
+
+Next Steps
+
+Please remove the update feature from your app. To distribute a new version of your app, upload the new app binary version into the same iTunes Connect record you created for the app's previous version. Updated versions keep the same Apple ID, iTunes Connect ID (SKU), and bundle ID as the original version, and are available free to customers who purchased a previous version. 
+
+Resources
+
+To create new versions of your app, please see Replacing Your App with a New Version in the iTunes Connect Developer Guide.   
+
+被拒原因：        
+   界面上的版本号显示位置可以点击，容易误导用户以为可以点击升级。   
+ 
+解决版本：   
+   将该位置设置为不可点击状态。    
 
 
 #### 2016-12-01
