@@ -2,6 +2,105 @@
 
 **************  
 
+
+#### 2016-12-01
+###iOS plist配置文件中存在未使用权限字段被拒问题
+* 第一次被拒：
+被拒原文：
+```
+Hardware required
+
+
+We began the review of your app but are not able to continue because we need the associated hardware to fully assess your app features.
+
+At your earliest convenience, please send the necessary hardware/accessory to the address below.
+
+NOTE: Please include your app name and app ID in the shipment; failure to provide this information can delay the review process.
+
+Additionally, it may take several business days for us to receive the hardware once it has been delivered to Apple.
+
+Once you've shipped the hardware, please reply to this message with the shipping carrier and tracking information. We will resume the review of your app upon receiving the hardware.
+
+IMPORTANT: for non-US Developers
+
+To avoid delays with US Customs, please provide the following information with your shipment (required for all radio-frequency devices imported in the US):
+
+Please use FCC form 740 for details on how to provide this information.
+
+Please make sure you also provide any required demo account information, including passwords, in the App Review Information section for your app in iTunes Connect.
+
+To provide demo account information:
+
+```
+大致意思是需要寄硬件设备到美国配合审核。
+由于之前审核都是不需要寄设备审核，经沟通后发现info.plist 中存在对后台音乐播放的声明，然后去掉了权限字段：
+```
+<key>NSAppleMusicUsageDescription</key>
+<string>此 App 需要您的同意才能获取本地音乐</string>
+```
+
+* 第二次被拒：  
+被拒原文：
+```
+
+Upon further review, we still found that your app declares support for audio in the UIBackgroundModes key in your Info.plist but did not include features that require persistent audio.
+
+Next Steps
+
+The audio key is intended for use by apps that provide audible content to the user while in the background, such as music player or streaming audio apps. Please revise your app to provide audible content to the user while the app is in the background or remove the "audio" setting from the UIBackgroundModes key.
+
+Additional Information
+
+If you have difficulty reproducing a reported issue, please try testing the workflow described in Technical Q&A QA1764: How to reproduce bugs reported against App Store submissions.
+
+If you have code-level questions after utilizing the above resources, you may wish to consult with Apple Developer Technical Support. When the DTS engineer follows up with you, please be ready to provide:
+- complete details of your rejection issue(s)
+- screenshots
+- steps to reproduce the issue(s)
+- symbolicated crash logs - if your issue results in a crash log
+
+```
+
+大致意思是当前APP仍支持后台音乐。   
+经查找发现，```Required background modes``` 中确实存在```App plays audio or streams audio/video using AirPlay``` 字段 删除后即可。   
+####总结：
+  在提交app store版本时，应确认使用的功能，一定要加上对应的字段。此外，应确保配置文件plist中没有多余的权限字段，即没有使用到的功能，应及时删除对应字段，否则app会被拒。
+  
+  
+  
+#### 2016-10-17
+
+
+iOS 10 却少对隐私权限的描述被 app store 被拒
+app store 上传app 时因为没有对使用功能的权限进行描述而被拒解决方法总结
+拒绝时而收到的邮件内容
+
+您好：
+ 
+感谢您就上传 App 构建版本的问题联系 Apple Developer Program Support。
+
+从 iOS 10 开始，访问任何应用中受保护的数据类都需要使用目的字符串（purpose string），包括所有第三方库在您的应用里使用这些受保护的数据类的用途。如果您收到有关您无法识别的数据类缺少目的字符串（purpose string）的提示，请咨询您的第三方库供应商，了解其对该受保护数据类的使用。
+有关更多详细信息，请参阅以下资源：
+App Programming Guide for iOS 中的 ”Supporting User Privacy“
+https://developer.apple.com/library/ios/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/ExpectedAppBehaviors/ExpectedAppBehaviors.html#//apple_ref/doc/uid/TP40007072-CH3-SW6
+Information Property List Key Reference 中的 “Cocoa Keys”
+https://developer.apple.com/library/prerelease/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html
+WWDC 2016: Engineering Privacy for Your Users (usage description keys discussed at 29:14)
+https://developer.apple.com/videos/play/wwdc2016/709/?time=1754
+希望以上信息对您有帮助。如果您需要再次联系我们，欢迎致电或通过电邮的方式跟我们联系，并提供案例编号：100045823076。我们的办公时间是北京时间周一至周五，09:00 至 17:00，电话号码是 4006-701-855。
+我们很乐意给您提供帮助，感谢您参与我们的开发者计划。 
+Queenie
+Apple Inc. 
+
+在工程的info.plist文件中需要添加获取用户隐私权限的key ，并且要对key 进行描述，因为没有对权限的key 进行描述，所以才会被拒，在plist文件中代码如下
+<key>NSAppleMusicUsageDescription</key>
+<string>此 App 需要您的同意才能获取本地音乐</string>
+<key>NSBluetoothPeripheralUsageDescription</key>
+<string>App需要您的同意,才能访问蓝牙</string>
+
+
+这样就不会被拒了
+
 ## 15. 应用中包含其他平台信息
 被拒原文：
 ```
