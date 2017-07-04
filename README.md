@@ -1,6 +1,30 @@
 # ios-app-store-review-guidelines-tips
 
 **************  
+#### 2017-07-04
+**问题原文如下：**      
+Guideline 2.5.1 - Performance - Software Requirements
+
+Your app uses or references the following non-public APIs:
+
+"LSApplicationWorkspace, defaultWorkspace, openSensitiveURL:withOptions:, __NSArrayM, __NSCFConstantString, __NSCFString, __NSDictionaryM, LSApplicationWorkspace, NSConcreteAttributedString, NSConcreteMutableAttributedString, UIStatusBarDataNetworkItemView" 
+
+The use of non-public APIs is not permitted on the App Store because it can lead to a poor user experience should these APIs change.
+
+**问题描述：**    
+应用中使用了以下的私有 APIs ，包括以下：
+
+"LSApplicationWorkspace, defaultWorkspace, openSensitiveURL:withOptions:, __NSArrayM, __NSCFConstantString, __NSCFString, __NSDictionaryM, LSApplicationWorkspace, NSConcreteAttributedString, NSConcreteMutableAttributedString, UIStatusBarDataNetworkItemView" 
+
+使用私有 APIs 是不允许上架 App Store 的，因为可能会导致非常不好的用户体验。
+
+**解决方案**    
+也许是 Apple 加强了对私有 API 的审核，之前使用字符串加密调用私有 API 的方法已不再有效。需要查找项目中使用了对应私有 API 的地方并移除掉对应代码。经查找此次被拒的私有 API 主要分布在两个功能模块，包括 iOS 10+ 跳转到到系统蓝牙界面和第三方库 AvoidCrash 中。需要移涉及相关私有 API 的模块。
+
+注意：另外可能有部分无法在代码中查找到，如 defaultWorkspace, openSensitiveURL:withOptions: 。针对此类查找其中部分代码如 Workspace ，会发现有相关代码包含 Workspace，如此部分无实质性功能，最好也一并移除掉。
+
+
+**************  
 #### 2016-08-16
 AppStore被驳回问题：   
 
